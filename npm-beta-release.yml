@@ -7,8 +7,25 @@ on:
         required: true
 
 jobs:
+  npm_beta_test:
+    name: Building package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: lts
+          registry-url: https://registry.npmjs.org/
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+        
   npm_beta_release:
     name: Publishing beta version of the package to NPM
+    needs: npm_beta_test
     runs-on: ubuntu-latest
     steps:
       - name: Generate build number
