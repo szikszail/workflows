@@ -8,7 +8,7 @@ on:
 
 jobs:
   npm_beta_test:
-    name: Building package
+    name: Testing
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,7 +24,7 @@ jobs:
         run: npm test
         
   npm_beta_release:
-    name: Publishing beta version of the package to NPM
+    name: Releasing
     needs: npm_beta_test
     runs-on: ubuntu-latest
     steps:
