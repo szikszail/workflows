@@ -1,0 +1,38 @@
+name: Publishing TypeDocs documentation to GitHub Pages
+
+on:
+  workflow_call:
+    inputs:
+      doc_script:
+        required: false
+        default: 'docs'
+        type: string
+      branch:
+        required: false
+        default: 'gp-pages'
+        type: string
+      folder:
+        required: false
+        default: 'docs'
+        type: strint
+        
+jobs:
+  build_and_publish_docs:
+    name: Building and publishing docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install
+        run: npm ci
+      - name: Generate documentation
+        run: npm run ${{ inputs.doc_script }}
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ inputs.branch }}
+          FOLDER: ${{ inputs.folder }}
+          CLEAN: true
