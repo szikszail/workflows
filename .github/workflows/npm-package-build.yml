@@ -1,0 +1,50 @@
+name: Building and testing NPM package
+
+on:
+  workflow_call:
+    inputs:
+      clover_file:
+        required: false
+        default: 'coverage/clover.xml'
+        type: string
+      coverage_treshold_warning:
+        required: false
+        default: 60
+        type: number
+      coverage_treshold_alert:
+        required: false
+        default: 80
+        type: number
+      coverage_treshold_metric:
+        required: false
+        default: 'branches'
+        type: string
+       
+jobs:
+  build_and_test:
+    name: Build and test NPM package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [lts/-1, lts/*, latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install
+        run: npm ci
+      - name: Build and test
+        run: npm run build
+      - name: Monitor coverage
+        if: ${{ always() }}
+        uses: szikszail/coverage-monitor-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          clover_file: ${{ inputs.clover_file }}
+          threshold_alert: ${{ inputs.coverage_treshold_alert }}
+          threshold_warning: ${{ inputs.coverage_treshold_warning }}
+          threshold_metric: ${{ inputs.coverage_treshold_metric }}
