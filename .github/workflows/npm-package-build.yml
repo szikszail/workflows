@@ -2,13 +2,18 @@
 # jobs:
 #   call_npm_package-build:
 #     uses: szikszail/workflows/.github/workflows/npm-package-build.yml@main
+#     with:
+#       coverage_path: coverage/clover.xml
+#       coverage_threshold_warning: 60
+#       coverage_threshold_alert: 80
+#       coverage_threshold_metric: branches
 
 name: Building and testing NPM package
 
 on:
   workflow_call:
     inputs:
-      clover_file:
+      coverage_path:
         required: false
         default: 'coverage/clover.xml'
         type: string
@@ -52,7 +57,7 @@ jobs:
         uses: szikszail/coverage-monitor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          clover_file: ${{ inputs.clover_file }}
+          coverage_path: ${{ inputs.coverage_path }}
           threshold_alert: ${{ inputs.coverage_treshold_alert }}
           threshold_warning: ${{ inputs.coverage_treshold_warning }}
           threshold_metric: ${{ inputs.coverage_treshold_metric }}
