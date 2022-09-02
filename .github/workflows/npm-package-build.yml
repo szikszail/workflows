@@ -1,3 +1,10 @@
+# USAGE (ci.yml)
+# jobs:
+#   call_npm_package-build:
+#     uses: szikszail/workflows/.github/workflows/npm-beta-release.yml@main
+#     secrets:
+#       npm_token: ${{ secrets.npm_token }}
+
 name: Building and testing NPM package
 
 on:
@@ -23,11 +30,14 @@ on:
 jobs:
   build_and_test:
     name: Build and test NPM package
-    runs-on: ubuntu-latest
+    
     strategy:
       matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
         node-version: [lts/-1, lts/*, latest]
 
+    runs-on: ${{ matrix.os }}
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
