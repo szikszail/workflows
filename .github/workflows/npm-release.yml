@@ -1,0 +1,46 @@
+name: Publishing latest version of the package to NPM
+
+on:
+  workflow_call:
+    secrets:
+      npm_token:
+        required: true
+
+jobs:
+  npm_test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org/
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+        
+  npm_release:
+    name: Releasing
+    needs: npm_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          registry-url: https://registry.npmjs.org/
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Release
+        run: npm publish .
+        working-directory: ./dist
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
