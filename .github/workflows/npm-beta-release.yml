@@ -1,11 +1,15 @@
+# USAGE (beta-release.yml)
+# jobs:
+#   call_npm_beta_release:
+#     uses: szikszail/workflows/.github/workflows/npm-beta-release.yml@main
+#     secrets:
+#       npm_token: ${{ secrets.npm_token }}      
 name: Publishing beta version of the package to NPM
-
 on:
   workflow_call:
     secrets:
       npm_token:
         required: true
-
 jobs:
   npm_beta_test:
     name: Testing
@@ -22,7 +26,6 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
-        
   npm_beta_release:
     name: Releasing
     needs: npm_beta_test
