@@ -1,5 +1,12 @@
+# USAGE (docs.yml)
+# jobs:
+#   call_typedocs_pages:
+#     uses: szikszail/workflows/.github/workflows/typedocs-pages.yml@main
+#     with:
+#       doc_script: docs
+#       branch: gh-pages
+#       folder: docs
 name: Publishing TypeDocs documentation to GitHub Pages
-
 on:
   workflow_call:
     inputs:
@@ -9,13 +16,12 @@ on:
         type: string
       branch:
         required: false
-        default: 'gp-pages'
+        default: 'gh-pages'
         type: string
       folder:
         required: false
         default: 'docs'
-        type: strint
-        
+        type: string
 jobs:
   build_and_publish_docs:
     name: Building and publishing docs
