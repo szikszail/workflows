@@ -1,6 +1,6 @@
 # USAGE (ci.yml)
 # jobs:
-#   call_npm_package-build:
+#   call_npm_package_build:
 #     uses: szikszail/workflows/.github/workflows/npm-package-build.yml@main
 #     with:
 #       coverage_path: coverage/clover.xml
