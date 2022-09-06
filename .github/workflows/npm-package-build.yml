@@ -7,9 +7,7 @@
 #       coverage_threshold_warning: 60
 #       coverage_threshold_alert: 80
 #       coverage_threshold_metric: branches
-
 name: Building and testing NPM package
-
 on:
   workflow_call:
     inputs:
@@ -28,19 +26,15 @@ on:
       coverage_treshold_metric:
         required: false
         default: 'branches'
-        type: string
-       
+        type: string      
 jobs:
   build_and_test:
     name: Build and test NPM package
-    
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
         node-version: [lts/-1, lts/*, latest]
-
     runs-on: ${{ matrix.os }}
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
