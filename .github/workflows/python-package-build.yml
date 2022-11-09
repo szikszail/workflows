@@ -30,7 +30,7 @@ on:
         type: string      
 jobs:
   build_and_test:
-    name: Build and test NPM package
+    name: Build and test Python package
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
@@ -58,7 +58,7 @@ jobs:
           pytest
       - name: Monitor coverage
         if: ${{ always() }}
-        uses: slavcodev/coverage-monitor-action@v1
+        uses: szikszail/coverage-monitor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           coverage_path: ${{ inputs.coverage_path }}
