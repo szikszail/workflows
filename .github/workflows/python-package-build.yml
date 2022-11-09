@@ -16,6 +16,10 @@ on:
         required: false
         default: 'coverage.xml'
         type: string
+      coverage_type:
+        required: false
+        default: 'auto'
+        type: string
       coverage_treshold_warning:
         required: false
         default: 60
@@ -56,12 +60,17 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+      - name: Debug
+        run: |
+          ls ${{ inputs.coverage_path }}
+          cat ${{ inputs.coverage_path }}
       - name: Monitor coverage
         if: ${{ always() }}
         uses: szikszail/coverage-monitor-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           coverage_path: ${{ inputs.coverage_path }}
+          coverage_format: ${{ inputs.coverage_format }}
           threshold_alert: ${{ inputs.coverage_treshold_alert }}
           threshold_warning: ${{ inputs.coverage_treshold_warning }}
           threshold_metric: ${{ inputs.coverage_treshold_metric }}
