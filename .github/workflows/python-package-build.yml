@@ -16,7 +16,7 @@ on:
         required: false
         default: 'coverage.xml'
         type: string
-      coverage_type:
+      coverage_format:
         required: false
         default: 'auto'
         type: string
