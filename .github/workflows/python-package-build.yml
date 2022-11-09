@@ -1,0 +1,67 @@
+# USAGE (ci.yml)
+# jobs:
+#   call_python_package_build:
+#     name: Build and test Python package
+#     uses: szikszail/workflows/.github/workflows/python-package-build.yml@main
+#     with:
+#       coverage_path: coverage/clover.xml
+#       coverage_threshold_warning: 60
+#       coverage_threshold_alert: 80
+#       coverage_threshold_metric: branches
+name: Building and testing Python package
+on:
+  workflow_call:
+    inputs:
+      coverage_path:
+        required: false
+        default: 'coverage.xml'
+        type: string
+      coverage_treshold_warning:
+        required: false
+        default: 60
+        type: number
+      coverage_treshold_alert:
+        required: false
+        default: 80
+        type: number
+      coverage_treshold_metric:
+        required: false
+        default: 'branches'
+        type: string      
+jobs:
+  build_and_test:
+    name: Build and test NPM package
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r dev-requirements.txt
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 nested_json --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 nested_json --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Test with pytest
+        run: |
+          pytest
+      - name: Monitor coverage
+        if: ${{ always() }}
+        uses: slavcodev/coverage-monitor-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          coverage_path: ${{ inputs.coverage_path }}
+          threshold_alert: ${{ inputs.coverage_treshold_alert }}
+          threshold_warning: ${{ inputs.coverage_treshold_warning }}
+          threshold_metric: ${{ inputs.coverage_treshold_metric }}
