@@ -7,6 +7,11 @@
 name: Publishing latest version of the package to NPM
 on:
   workflow_call:
+    inputs:
+      dist_folder:
+        required: false
+        default: './dist'
+        type: string
     secrets:
       npm_token:
         required: true
@@ -44,12 +49,12 @@ jobs:
       - name: Install
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
       - name: Release
         run: npm publish --provenance --access public .
-        working-directory: ./dist
+        working-directory: ${{ inputs.dist_folder }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
       - name: Unpublishing BETA versions
         run: |
           cn=$(cat package.json | grep name | cut -d '"' -f 4)
@@ -58,6 +63,6 @@ jobs:
           for v in $betas; do 
             npm deprecate $cn@$v "Use latest version: $cv!" || echo "Could not deprecate: $cv!"; 
           done
-        working-directory: ./dist
+        working-directory: ${{ inputs.dist_folder }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
