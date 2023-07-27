@@ -7,6 +7,11 @@
 name: Publishing beta version of the package to NPM
 on:
   workflow_call:
+    inputs:
+      dist_folder:
+        required: false
+        default: './dist'
+        type: string
     secrets:
       npm_token:
         required: true
@@ -26,6 +31,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
+        
   npm_beta_release:
     name: Releasing
     needs: npm_beta_test
@@ -45,13 +51,13 @@ jobs:
       - name: Install
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
       - name: Release
         run: |
           cv=$(cat package.json | grep version | cut -d '"' -f 4)
           echo "$cv-beta.$BUILD_NUMBER"
           npm --no-git-tag-version version "$cv-beta.$BUILD_NUMBER"
           npm publish --tag beta .
-        working-directory: ./dist
+        working-directory: ${{ inputs.dist_folder }}
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
