@@ -15,5 +15,5 @@
 | [szikszail/lines-builder](https://github.com/szikszail/lines-builder)           |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
 | [szikszail/npm-package](https://github.com/szikszail/npm-package)               |       :heavy_plus_sign:TODO       |       :heavy_plus_sign:TODO        |    :heavy_plus_sign:TODO     |      :heavy_plus_sign:TODO      |
 | [szikszail/object-set-type](https://github.com/szikszail/object-set-type)       |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
-| [szikszail/require-it](https://github.com/szikszail/requite-it)                 |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
+| [szikszail/require-it](https://github.com/szikszail/require-it)                 |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
 | [szikszail/with-aws-creds](https://github.com/szikszail/with-aws-creds)         |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
