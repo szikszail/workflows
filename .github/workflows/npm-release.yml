@@ -1,6 +1,9 @@
 # USAGE (release.yml)
 # jobs:
 #   call_npm_release:
+#     permissions:
+#       contents: read
+#       id-token: write
 #     uses: szikszail/workflows/.github/workflows/npm-release.yml@main
 #     secrets:
 #       npm_token: ${{ secrets.npm_token }}    
