@@ -3,6 +3,7 @@
 | Repository                                                                      | npm-beta-release | npm-package-build | npm-release | typedocs-pages |
 | :------------------------------------------------------------------------------ | :--------------: | :---------------: | :---------: | :------------: |
 | [gherking/gherkin-ast](https://github.com/gherking/gherkin-ast)                 |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
+| [gherking/gherkin-formatter](https://github.com/gherking/gherkin-formatter)                 |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
 | [gherking/gherkin-io](https://github.com/gherking/gherkin-io)                   |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
 | [gherking/gherking](https://github.com/gherking/gherking)                       |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
 | [gherking/gpc-test-data](https://github.com/gherking/gpc-test-data)             |       :heavy_check_mark:`v1`       |       :heavy_check_mark:`v1`        |    :heavy_check_mark:`v1`     |      :heavy_check_mark:`v1`      |
