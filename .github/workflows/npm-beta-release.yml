@@ -1,6 +1,9 @@
 # USAGE (beta-release.yml)
 # jobs:
 #   call_npm_beta_release:
+#     permissions:
+#       contents: read
+#       id-token: write
 #     uses: szikszail/workflows/.github/workflows/npm-beta-release.yml@main
 #     secrets:
 #       npm_token: ${{ secrets.npm_token }}      
@@ -21,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setting up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
@@ -36,15 +39,18 @@ jobs:
     name: Releasing
     needs: npm_beta_test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Generate build number
-        uses: einaregilsson/build-number@v3
+        uses: onyxmueller/build-tag-number@v1
         with:
           token: ${{secrets.github_token}}        
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setting up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
@@ -57,7 +63,7 @@ jobs:
           cv=$(cat package.json | grep version | cut -d '"' -f 4)
           echo "$cv-beta.$BUILD_NUMBER"
           npm --no-git-tag-version version "$cv-beta.$BUILD_NUMBER"
-          npm publish --tag beta .
+          npm publish --tag beta --provenance --access public .
         working-directory: ${{ inputs.dist_folder }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
