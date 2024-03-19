@@ -66,7 +66,7 @@ jobs:
           cat ${{ inputs.coverage_path }}
       - name: Monitor coverage
         if: ${{ always() }}
-        uses: szikszail/coverage-monitor-action@main
+        uses: slavcodev/coverage-monitor-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           coverage_path: ${{ inputs.coverage_path }}
