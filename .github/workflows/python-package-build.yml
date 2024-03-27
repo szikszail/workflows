@@ -2,6 +2,10 @@
 # jobs:
 #   call_python_package_build:
 #     name: Build and test Python package
+#     permissions:
+#       contents: read
+#       pull-requests: write
+#       statuses: write
 #     uses: szikszail/workflows/.github/workflows/python-package-build.yml@main
 #     with:
 #       coverage_path: coverage/clover.xml
@@ -35,6 +39,10 @@ on:
 jobs:
   build_and_test:
     name: Build and test Python package
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
