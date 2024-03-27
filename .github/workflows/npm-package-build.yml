@@ -1,6 +1,10 @@
 # USAGE (ci.yml)
 # jobs:
 #   call_npm_package_build:
+#     permissions:
+#       contents: read
+#       pull-requests: write
+#       statuses: write
 #     uses: szikszail/workflows/.github/workflows/npm-package-build.yml@main
 #     with:
 #       coverage_path: coverage/clover.xml
@@ -30,6 +34,10 @@ on:
 jobs:
   build_and_test:
     name: Build and test NPM package
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
