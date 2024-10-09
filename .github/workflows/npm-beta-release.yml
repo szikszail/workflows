@@ -6,14 +6,14 @@
 #       id-token: write
 #     uses: szikszail/workflows/.github/workflows/npm-beta-release.yml@main
 #     secrets:
-#       npm_token: ${{ secrets.npm_token }}      
+#       npm_token: ${{ secrets.npm_token }}
 name: Publishing beta version of the package to NPM
 on:
   workflow_call:
     inputs:
       dist_folder:
         required: false
-        default: './dist'
+        default: "./dist"
         type: string
     secrets:
       npm_token:
@@ -34,7 +34,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test
-        
+
   npm_beta_release:
     name: Releasing
     needs: npm_beta_test
@@ -43,10 +43,6 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - name: Generate build number
-        uses: onyxmueller/build-tag-number@v1
-        with:
-          token: ${{secrets.github_token}}        
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setting up Node.js
@@ -61,8 +57,8 @@ jobs:
       - name: Release
         run: |
           cv=$(cat package.json | grep version | cut -d '"' -f 4)
-          echo "$cv-beta.$BUILD_NUMBER"
-          npm --no-git-tag-version version "$cv-beta.$BUILD_NUMBER"
+          echo "$cv-beta.$GITHUB_RUN_ID"
+          npm --no-git-tag-version version "$cv-beta.$GITHUB_RUN_ID"
           npm publish --tag beta --provenance --access public .
         working-directory: ${{ inputs.dist_folder }}
         env:
