@@ -14,15 +14,15 @@ on:
     inputs:
       doc_script:
         required: false
-        default: 'docs'
+        default: "docs"
         type: string
       branch:
         required: false
-        default: 'gh-pages'
+        default: "gh-pages"
         type: string
       folder:
         required: false
-        default: 'docs'
+        default: "docs"
         type: string
 jobs:
   build_and_publish_docs:
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Install

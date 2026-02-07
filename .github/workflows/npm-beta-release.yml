@@ -24,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setting up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
@@ -44,9 +44,9 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setting up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
           registry-url: https://registry.npmjs.org/
@@ -61,5 +61,3 @@ jobs:
           npm --no-git-tag-version version "$cv-beta.$GITHUB_RUN_ID"
           npm publish --tag beta --provenance --access public .
         working-directory: ${{ inputs.dist_folder }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}

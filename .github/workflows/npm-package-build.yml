@@ -17,7 +17,7 @@ on:
     inputs:
       coverage_path:
         required: false
-        default: 'coverage/clover.xml'
+        default: "coverage/clover.xml"
         type: string
       coverage_treshold_warning:
         required: false
@@ -29,8 +29,8 @@ on:
         type: number
       coverage_treshold_metric:
         required: false
-        default: 'branches'
-        type: string      
+        default: "branches"
+        type: string
 jobs:
   build_and_test:
     name: Build and test NPM package
@@ -45,9 +45,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install
